@@ -1,0 +1,36 @@
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.cluster import KMeans
+from MLAlgorithms import MLAlgorithms
+
+class KMeans(MLAlgorithms):
+    def __init__(self, dataCSV, columnas, colClase, n):
+        super().__init__(dataCSV, columnas)
+        self.colClase = colClase
+        self.n = n
+
+    def previewData(self):
+        dataCSV = self.dataCSV[self.columnas]
+        self.binaClasses = pd.unique(dataCSV[self.colClase])
+        for i in range(0, len(self.binaClasses)):
+            dataCSV[self.colClase] = dataCSV[self.colClase].replace(self.binaClasses[i], i)
+        return dataCSV
+
+    def resolve(self):
+        dataCSV = self.previewData()
+        x = dataCSV[self.columnas[0]]
+        y = dataCSV[self.columnas[1]]
+        classes = dataCSV[self.colClase]
+        
+        X = list(zip(x, y))
+
+        k_means = KMeans(n_clusters=self.n)
+        k_means.fit(X)
+        centroides = k_means.cluster_centers_
+        etiquetas = k_means.labels_
+        plt.plot(x, y,'g.', label='datos')
+
+        plt.plot(centroides[:,0],centroides[:,1],'mo',markersize=8, label='centroides')
+
+        plt.legend(loc='best')
+        plt.show()

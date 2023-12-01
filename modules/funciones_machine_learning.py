@@ -1,2 +1,1 @@
-def knn():
-    pass
+# Aqui van funciones
