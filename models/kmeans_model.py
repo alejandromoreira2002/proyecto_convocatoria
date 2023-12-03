@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.cluster import KMeans
-from MLAlgorithms import MLAlgorithms
+from .MLAlgorithms import MLAlgorithms
 
-class KMeans(MLAlgorithms):
+class KMeansModel(MLAlgorithms):
     def __init__(self, dataCSV, columnas, colClase, n):
         super().__init__(dataCSV, columnas)
         self.colClase = colClase

@@ -17,12 +17,6 @@ h1{
     justify-content: space-between;
 }
 
-
-.data-preview-content, .control-btns-container{
-    
-}
-
-
 .data-preview-content{
     flex: 3;
     max-width: 1011px;
@@ -31,7 +25,7 @@ h1{
 .filename-text{
     color: #353535;
     overflow: hidden;
-    max-width: 250px;
+    /*max-width: 250px;*/ /********REVISAR AJUSTAR TAMAÑO DE NOMBRE********/
     max-height: 19px;
 }
 
@@ -43,19 +37,52 @@ h1{
 }
 
 #uploadcsv-btn{
-    border: 1px solid black;
-    background-color: aqua;
+    /*border: 1px solid black;*/
+    background-color: rgb(255, 215, 112);
     padding: 5px 8px;
     cursor: pointer;
 }
 
 #uploadcsv-btn:hover{
-    background-color: aquamarine;
+    background-color: rgb(252, 196, 54);;
 }
 
 .table-preview{
-    max-height: 250px;
+    position: relative;
+    height: 250px;
     overflow: auto;
+}
+
+.loading-table{
+    position: absolute;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    font-size: 35pt;
+}
+
+.lt-open{
+    display: flex;
+}
+
+.loading-prev-icon{
+    font-size: 35pt;
+    color: rgb(173, 173, 173);
+    animation-name: spinicon;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes spinicon{
+    from {
+        rotate: 0deg;
+    }
+    to{
+        rotate: 360deg;
+    }
 }
 
 .control-btns-container{
@@ -64,8 +91,11 @@ h1{
 
 .btn-ia-model{
     display: block;
-    background-color: black;
-    color: white;
+    background-color: rgb(199, 199, 199);
+    border: none;
+    border-radius: 5px;
+    color: rgb(85, 85, 85);
+    font-weight: 500;
     width: 200px;
     cursor: pointer;
     margin: 10px auto;
@@ -73,11 +103,13 @@ h1{
 }
 
 .btn-save{
-    background-color: green;
+    background-color: rgb(0, 175, 175);
+    color: white;
     margin: 35px auto 0 auto;
 }
 
 .model-form-container{
+    z-index: 100;
     position: fixed;
     display: none;
     background-color: rgba(0, 0, 0, 0.4);
@@ -116,8 +148,69 @@ h1{
     position: absolute;
     top: 7px;
     right: 12px;
-    color: #a3a3a3;
+    color: #4e4e4e;
     background-color: transparent;
     border: none;
     font-size: 20pt;
+}
+
+.body-alg-form{
+    min-height: 260px;
+    max-height: 400px;
+}
+
+.footer-alg-form{
+    height: 43px;
+    position: relative;
+}
+
+.alg-form-section{
+    padding: 10px 0;
+}
+
+.alg-form-section p{
+    margin: 0;
+}
+
+.cols-input-container{
+    width: 100%;
+    max-height: 80px;
+    outline: 1px solid #7e7e7e;
+    border-radius: 2px;
+    overflow-x: hidden;
+    padding: 5px 10px;
+}
+
+.cols-input-container label{
+    display: inline-block;
+    width: 45%;
+}
+
+#footer-alg-form div{
+    position: absolute;
+    height: 100%;
+    right: 0;
+}
+
+#footer-alg-form div button{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 2px 8px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 3px;
+}
+
+.form-btn-preview{
+    background-color: #dfdfdf;
+}
+
+.form-btn-process{
+    background-color: rgb(9, 163, 61);
+    color: #fff;
+}
+
+.ubicacion-ejes-label{
+    width: 45%;
 }

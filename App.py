@@ -1,6 +1,9 @@
+
+################[ AUN NO SE TRABAJARA EN EL BACKEND HASTA TERMINAR EL FRONTEND ]################
+
 from flask import Flask, render_template, url_for, redirect, request, session
-from models.kmeans_model import KMeans
-from models.knn_model import KNN
+from models.kmeans_model import KMeansModel
+from models.knn_model import KNNModel
 import pandas as pd
 #import time
 

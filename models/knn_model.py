@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
-from MLAlgorithms import MLAlgorithms
+from .MLAlgorithms import MLAlgorithms
 
-class KNN(MLAlgorithms):
+class KNNModel(MLAlgorithms):
     def __init__(self, dataCSV, columnas, colClase, k, centro=(0,0)):
         super().__init__(dataCSV, columnas)
         self.colClase = colClase

@@ -13,11 +13,22 @@
 </head>
 <body>
     <div class="model-form-container" id="model-form-container">
-      <!--<div class="data-model-preview" id="data-model-preview"></div>-->
+      <!-- CONTENEDOR PARA LA PREVISUALIZACION DEL DATAFRAME LIMPIO
+      <div class="data-model-preview">
+        
+      </div>-->
       <div class="params-form" id="params-form">
-        <h3 id="algoritm-title">Modelo KNN</h3>
+        <h3 id="algorithm-title">Modelo</h3>
         <button id="close-form-btn" class="close-form-btn"><i class="fa-regular fa-circle-xmark"></i></button>
         <hr>
+        <div id="body-alg-form" class="body-alg-form">
+        </div>
+        <div id="footer-alg-form" class="footer-alg-form">
+          <div>
+            <button id="form-btn-preview" class="form-btn-preview">Previsualizar</button>
+            <button id="form-btn-process" class="form-btn-process">Procesar</button>
+          </div>
+        </div>
       </div>
     </div>
     <header>
@@ -32,62 +43,26 @@
                     <input type="file" id="file-upload" name="file-upload" accept=".csv" style="display:none;"/>
                 </form>
                 <div class="table-preview">
+                  <div id="loading-table" class="loading-table">
+                    <div class="loading-prev-icon"><i class="fa-solid fa-circle-notch"></i></div>
+                  </div>
                   <table class="table table-striped" id="tabla"></table>
                 </div>
             </div>
             <div class="control-btns-container">
-                <button class="btn-ia-model" id="algorithm-btn1">KNN</button>
-                <button class="btn-ia-model" id="algorithm-btn2">REDES NEURONALES</button>
-                <button class="btn-ia-model" id="algorithm-btn3">ARBOLES DE DECISION</button>
-                <button class="btn-ia-model" id="algorithm-btn4">AGRUPAMIENTO</button>
+                <button class="btn-ia-model" id="algorithm-btn1" value="knn">KNN</button>
+                <button class="btn-ia-model" id="algorithm-btn2" value="kmeans">K-MEANS</button>
+                <button class="btn-ia-model" id="algorithm-btn3" value="tree">ARBOLES DE DECISION</button>
+                <button class="btn-ia-model" id="algorithm-btn4" value="cluster">AGRUPAMIENTO</button>
                 <button class="btn-ia-model btn-save" id="save-model-btn">GUARDAR</button>
             </div>
         </article>
+        <!-- AQUI SE MOSTRARAN LAS GRAFICAS DE LOS RESULTADOS -->
         <article>
             
         </article>
     </main>
+    <!-- FALTA TRABAJAR EN FOOTER -->
     <footer></footer>
-    <script>
-        
-        
-
-        /*
-        function updateImageDisplay() {
-            while (preview.firstChild) {
-              preview.removeChild(preview.firstChild);
-            }
-          
-            const curFiles = input.files;
-            if (curFiles.length === 0) {
-              const para = document.createElement("p");
-              para.textContent = "No files currently selected for upload";
-              preview.appendChild(para);
-            } else {
-              const list = document.createElement("ol");
-              preview.appendChild(list);
-          
-              for (const file of curFiles) {
-                const listItem = document.createElement("li");
-                const para = document.createElement("p");
-                if (validFileType(file)) {
-                  para.textContent = `File name ${file.name}, file size ${returnFileSize(
-                    file.size,
-                  )}.`;
-                  const image = document.createElement("img");
-                  image.src = URL.createObjectURL(file);
-          
-                  listItem.appendChild(image);
-                  listItem.appendChild(para);
-                } else {
-                  para.textContent = `File name ${file.name}: Not a valid file type. Update your selection.`;
-                  listItem.appendChild(para);
-                }
-          
-                list.appendChild(listItem);
-              }
-            }
-          }*/
-    </script>
 </body>
 </html>
