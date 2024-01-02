@@ -63,10 +63,6 @@ h1{
     font-size: 35pt;
 }
 
-.lt-open{
-    display: flex;
-}
-
 .loading-prev-icon{
     font-size: 35pt;
     color: rgb(173, 173, 173);
@@ -100,6 +96,12 @@ h1{
     cursor: pointer;
     margin: 10px auto;
     padding: 10px 20px;
+}
+
+.btn-ia-model:disabled{
+    color: #afafaf;
+    background-color: #dddddd;
+    cursor: default;
 }
 
 .btn-save{
@@ -138,10 +140,27 @@ h1{
 }
 
 .data-model-preview{
-    background-color: black;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.3);
     min-height: 410px;
     max-height: 550px;
     flex: 1;
+    display: none;
+    overflow: auto;
+    padding: 10px 5px;
+}
+
+.loading-prev-mtable{
+    position: absolute;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.lt-open{
+    display: flex;
 }
 
 .close-form-btn{
@@ -203,7 +222,13 @@ h1{
 }
 
 .form-btn-preview{
-    background-color: #dfdfdf;
+    background-color: #d7d7d7;
+    color: #515151;
+}
+
+.form-btn-preview:disabled, .form-btn-process:disabled{
+    background-color: #e5e5e5;
+    color:#bdbdbd;
 }
 
 .form-btn-process{

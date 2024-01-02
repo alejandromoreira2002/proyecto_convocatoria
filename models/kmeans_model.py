@@ -5,16 +5,8 @@ from .MLAlgorithms import MLAlgorithms
 
 class KMeansModel(MLAlgorithms):
     def __init__(self, dataCSV, columnas, colClase, n):
-        super().__init__(dataCSV, columnas)
-        self.colClase = colClase
+        super().__init__(dataCSV, columnas, colClase)
         self.n = n
-
-    def previewData(self):
-        dataCSV = self.dataCSV[self.columnas]
-        self.binaClasses = pd.unique(dataCSV[self.colClase])
-        for i in range(0, len(self.binaClasses)):
-            dataCSV[self.colClase] = dataCSV[self.colClase].replace(self.binaClasses[i], i)
-        return dataCSV
 
     def resolve(self):
         dataCSV = self.previewData()
