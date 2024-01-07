@@ -261,3 +261,83 @@ main{
 .model-result{
     flex: 1;
 }
+
+.save-form-container{
+    z-index: 110;
+    position: fixed;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    /*opacity: 0;*/
+    width: 100%;
+    height: 100vh;
+    /*transition: opacity 0.3s;*/
+    /*padding: 0 110px;*/
+}
+
+.save-form-content{
+    position: relative;
+    border-radius: 15px;
+    background-color: #fff;
+    padding: 25px;
+    width: 70%;
+    height: 92%;
+}
+.close-sform-btn{
+    position: absolute;
+    top: -18px;
+    right: -12px;
+    background: transparent;
+    border: none;
+    font-size: 25pt;
+}
+
+.fa-circle-xmark{
+    color: #fff;
+    background-color: #4e4e4e;
+    border-radius: 50%;
+}
+
+.save-name-model{
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #c0c0c0;
+    transition: background-color .2s;
+}
+
+.save-name-model:focus, .save-name-model:hover{
+    background-color: #e7e7e7;
+    outline: none;
+}
+
+.save-data-details{
+    display: flex;
+    height: 341px;
+    margin: 15px 0;
+}
+
+.save-model-data-container{
+    flex: 2;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    overflow: auto;
+}
+
+.save-model-details-container{
+    flex: 1;
+    padding: 10px;
+}
+
+#btn-confirm-save{
+    display: block;
+    margin: auto;
+    padding: 8px 65px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(9, 163, 61);
+    color: #fff;
+}

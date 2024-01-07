@@ -166,7 +166,30 @@ window.onload = () => {
             const dataResult = document.querySelector('#data-result-content');
             dataResult.innerHTML = resHTML;
             document.querySelector("#save-model-btn").removeAttribute('disabled');
+
+            document.querySelector('#save-alg-type').innerText = data['algType'];
+            previewData(null, JSON.parse(data['cleandata']), "#save-model-data");
+            dataDetails = document.querySelector('#data-details');
+            dataDetails.innerHTML = `
+                <p><b>Tipo de Algoritmo:</b> ${data['algType']}</p>
+                <p><b>Nombre de archivo:</b> ${data['filename']}</p>
+            `;
+
+            if(data['algType'] == "knn"){
+                dataDetails.innerHTML += `
+                <p><b>Vecinos:</b> ${data['details']['k']}</p>
+                <p><b>Centro:</b> ${data['details']['centro']}</p>
+                `
+            }else if(data['algType'] == "kmeans"){
+                dataDetails.innerHTML += `
+                <p><b>Clusters:</b> ${data['details']['n']}</p>
+                `
+            }
         });
+    });
+
+    modelSaveBtn.addEventListener('click', e => {
+        document.querySelector('#save-form-container').style.display = 'flex';
     });
 }
 

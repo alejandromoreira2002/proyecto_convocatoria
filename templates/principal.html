@@ -35,6 +35,37 @@
         </div>
       </div>
     </div>
+    <div class="save-form-container" id="save-form-container">
+
+      <div class="save-form-content" id="save-form-content">
+        <button id="close-sform-btn" class="close-sform-btn"><i class="fa-regular fa-circle-xmark"></i></button>
+        <!--
+        <div id="loading-model-save" class="loading-model-save">
+          <div class="loading-prev-icon"><i class="fa-solid fa-circle-notch" aria-hidden="true"></i></div>
+        </div>-->
+
+        <h3>Guardar Modelo <span id="save-alg-type"></span></h3>
+        <hr>
+        <!--<label for="save-name-model">Nombre del modelo: </label>-->
+        <input class="save-name-model" id="save-name-model" type="text" placeholder="Nombre del modelo">
+        <div class="save-data-details" id="save-data-details">
+          <div class="save-model-data-container" id="save-model-data-container">
+            <table class="table table-striped" id="save-model-data">
+
+            </table>
+          </div>
+          <div class="save-model-details-container" id="save-model-details-container">
+            <h4>Detalles</h4>
+            <div class="data-details" id="data-details">
+              
+            </div>
+          </div>
+        </div>
+        <div class="btns-control-save">
+          <button id="btn-confirm-save">Guardar</button>
+        </div>
+      </div>
+    </div>
     <header>
         <h1>PROYECTO CONVOCATORIA</h1>
     </header>
@@ -56,13 +87,6 @@
                   </table>
                 </div>
             </div>
-            <!--<div class="control-btns-container">
-                <button class="btn-ia-model allowed" id="algorithm-btn1" value="knn" disabled>KNN</button>
-                <button class="btn-ia-model allowed" id="algorithm-btn2" value="kmeans" disabled>K-MEANS</button>
-                <button class="btn-ia-model" id="algorithm-btn3" value="tree" disabled>ARBOLES DE DECISION</button>
-                <button class="btn-ia-model" id="algorithm-btn4" value="cluster" disabled>AGRUPAMIENTO</button>
-                <button class="btn-ia-model btn-save" id="save-model-btn" disabled>GUARDAR</button>
-            </div>-->
         </article>
         <!-- AQUI SE MOSTRARAN LAS GRAFICAS DE LOS RESULTADOS -->
         <article class="data-result-container">

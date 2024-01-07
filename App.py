@@ -100,6 +100,7 @@ def processKNN():
     centro = tuple([int(x) for x in request.form['centro'].split(',')])
     
     knnmodel = KNNModel(dataCSV, columnas, colClase)
+    cleandata = knnmodel.previewData()
     fig = knnmodel.resolve(k, centro)
 
     img_data = BytesIO()
@@ -110,7 +111,14 @@ def processKNN():
     encoded_img = base64.b64encode(img_data.read()).decode('utf-8')
     prediction = knnmodel.prediction
 
-    return jsonify({"algType": "knn", "prediction": prediction, "plot": encoded_img}) 
+    return jsonify({
+            "algType": "knn",
+            "filename": filename,
+            "cleandata": cleandata.to_json(orient='records'),
+            "details": {"k": k, "centro": request.form['centro']},
+            "prediction": prediction,
+            "plot": encoded_img
+            }) 
 
 @app.post('/kmeans/process')
 def processKMeans():
@@ -123,6 +131,7 @@ def processKMeans():
     n = int(request.form['n'])
     
     kmeansmodel = KMeansModel(dataCSV, columnas, colClase)
+    cleandata = kmeansmodel.previewData()
     fig = kmeansmodel.resolve(n)
 
     img_data = BytesIO()
@@ -132,7 +141,13 @@ def processKMeans():
 
     encoded_img = base64.b64encode(img_data.read()).decode('utf-8')
     
-    return jsonify({"algType": "kmeans", "plot": encoded_img}) 
+    return jsonify({
+        "algType": "kmeans",
+        "filename": filename,
+        "cleandata": cleandata.to_json(orient='records'),
+        "details": {"n": n},
+        "plot": encoded_img
+        }) 
 #========================================================================#
 
 
