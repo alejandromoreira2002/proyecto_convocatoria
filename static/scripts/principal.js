@@ -191,6 +191,10 @@ window.onload = () => {
     modelSaveBtn.addEventListener('click', e => {
         document.querySelector('#save-form-container').style.display = 'flex';
     });
+
+    document.querySelector('#close-sform-btn').addEventListener('click', e => {
+        document.querySelector('#save-form-container').style.display = 'none';
+    });
 }
 
 /* PRESENTA LOS DATOS EN FORMATO DE TABLA */
