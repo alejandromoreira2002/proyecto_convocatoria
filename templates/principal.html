@@ -39,6 +39,7 @@
         <h1>PROYECTO CONVOCATORIA</h1>
     </header>
     <main>
+      <div class="container-preview-result">
         <article class="data-preview-container">
             <div class="data-preview-content">
                 <form class="file-selection-form" id="file-selection-form" action="/prueba" method="post" enctype="multipart/form-data">
@@ -55,19 +56,37 @@
                   </table>
                 </div>
             </div>
-            <div class="control-btns-container">
+            <!--<div class="control-btns-container">
                 <button class="btn-ia-model allowed" id="algorithm-btn1" value="knn" disabled>KNN</button>
                 <button class="btn-ia-model allowed" id="algorithm-btn2" value="kmeans" disabled>K-MEANS</button>
                 <button class="btn-ia-model" id="algorithm-btn3" value="tree" disabled>ARBOLES DE DECISION</button>
                 <button class="btn-ia-model" id="algorithm-btn4" value="cluster" disabled>AGRUPAMIENTO</button>
                 <button class="btn-ia-model btn-save" id="save-model-btn" disabled>GUARDAR</button>
-            </div>
+            </div>-->
         </article>
         <!-- AQUI SE MOSTRARAN LAS GRAFICAS DE LOS RESULTADOS -->
-        <article>
-            
+        <article class="data-result-container">
+            <h4>RESULTADOS</h4>
+            <hr>
+            <div class="data-result-content" id="data-result-content">
+              <!--<div class="model-graph" id="model-graph">
+                <img src="https://fotografiamejorparavendermas.com/wp-content/uploads/2017/06/La-importancia-de-la-imagen.jpg" width="100%" alt="Plot">
+              </div>
+              <div class="model-result">
+                <p>Aqui iran las propiedades del modelo</p>
+              </div>-->
+            </div>
         </article>
+      </div>
+      <aside class="control-btns-container">
+        <button class="btn-ia-model allowed" id="algorithm-btn1" value="knn" disabled>KNN</button>
+        <button class="btn-ia-model allowed" id="algorithm-btn2" value="kmeans" disabled>K-MEANS</button>
+        <button class="btn-ia-model" id="algorithm-btn3" value="tree" disabled>ARBOLES DE DECISION</button>
+        <button class="btn-ia-model" id="algorithm-btn4" value="cluster" disabled>AGRUPAMIENTO</button>
+        <button class="btn-ia-model btn-save" id="save-model-btn" disabled>GUARDAR</button>
+      </aside>
     </main>
+    
     <!-- FALTA TRABAJAR EN FOOTER -->
     <footer></footer>
 </body>

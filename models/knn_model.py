@@ -4,13 +4,15 @@ from sklearn.neighbors import KNeighborsClassifier
 from .MLAlgorithms import MLAlgorithms
 
 class KNNModel(MLAlgorithms):
-    def __init__(self, dataCSV, columnas, colClase, k, centro=(0,0)):
+    def __init__(self, dataCSV, columnas, colClase):
         super().__init__(dataCSV, columnas, colClase)
+
+    def resolve(self, k, centro=(0,0)):
         self.k = k
         self.centro = centro
 
-    def resolve(self):
         dataCSV = self.previewData()
+        self.columnas.remove(self.colClase)
         x = dataCSV[self.columnas[0]]
         y = dataCSV[self.columnas[1]]
 
@@ -27,9 +29,11 @@ class KNNModel(MLAlgorithms):
         #new_y = 175
         new_point = [(new_x, new_y)]
         prediction = knn.predict(new_point)
-        prediction = self.binaClasses[prediction[0]]
+        self.prediction = self.binaClasses[prediction[0]]
 
         colors = ["blue", "red", "orange", "purple", "black", "green", "grey"]
+        plt.cla()
+        plt.clf()
         ax = plt.axes()
         for i in range(0, len(self.binaClasses)):
             ax.scatter(dataCSV.loc[dataCSV[self.colClase] == i, self.columnas[0]],
@@ -43,10 +47,8 @@ class KNNModel(MLAlgorithms):
                 s=110,
                 marker= "*",
                 edgecolors="black")
-        plt.text(x=new_x-8.2, y=new_y-4.2, s=f"Centro, predicho: {prediction}", backgroundcolor= "#0000008F", c="white")
+        plt.text(x=new_x-8.2, y=new_y-4.2, s=f"Centro, predicho: {self.prediction}", backgroundcolor= "#0000008F", c="white")
         plt.xlabel(self.columnas[0])
         plt.ylabel(self.columnas[1])
         ax.legend()
-        plt.show()
-
-        print(prediction)
+        return plt
