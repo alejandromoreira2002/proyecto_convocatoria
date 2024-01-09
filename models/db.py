@@ -13,3 +13,13 @@ class db():
             return data
         else:
             return None
+    
+    def insertarDatos(self, sql, data):
+        cursor = self.mysql.get_db().cursor()
+        op = cursor.execute(sql, data)
+        self.mysql.get_db().commit()
+        cursor.close()
+        if(op):
+            return 1
+        else:
+            return 0

@@ -14,6 +14,9 @@ window.onload = () => {
     const mfContainer = document.querySelector('.model-form-container');
     const btnCloseForm = document.querySelector('#close-form-btn');
 
+    var gcleandata = null;
+    var gparams = null;
+
     // Presenta el nombre del archivo al lado y muestra tabla
     const readFile = () => {
         const csvFile = fileElement.files[0];
@@ -147,7 +150,7 @@ window.onload = () => {
         .then(data => {
             let resHTML = `
                 <div class="model-graph">
-                <img src="data:image/png;base64,${data['plot']}" width="100%" alt="Plot">
+                <img src="data:image/png;base64,${data['plot']}" id="model-result-graph" name="modelplot_${data['algType']+'_'+Date.now()}" width="100%" alt="Plot">
                 </div>
             `;
             if(data['algType'] == "knn"){
@@ -168,21 +171,28 @@ window.onload = () => {
             document.querySelector("#save-model-btn").removeAttribute('disabled');
 
             document.querySelector('#save-alg-type').innerText = data['algType'];
+
+            gcleandata = data['cleandata'];
+            gparams = data['details'];
             previewData(null, JSON.parse(data['cleandata']), "#save-model-data");
             dataDetails = document.querySelector('#data-details');
             dataDetails.innerHTML = `
-                <p><b>Tipo de Algoritmo:</b> ${data['algType']}</p>
-                <p><b>Nombre de archivo:</b> ${data['filename']}</p>
+                <p><b>Tipo de Algoritmo:</b> <span id="d-algType">${data['algType']}</span></p>
+                <p><b>Nombre de archivo:</b> <span id="d-filename">${data['filename']}</span></p>
             `;
 
             if(data['algType'] == "knn"){
                 dataDetails.innerHTML += `
-                <p><b>Vecinos:</b> ${data['details']['k']}</p>
-                <p><b>Centro:</b> ${data['details']['centro']}</p>
+                <div id="d-more-details">
+                    <p><b>Vecinos:</b> <span class="dmd-props" name="vecinos">${JSON.parse(data['details'])['k']}</span></p>
+                    <p><b>Centro:</b> <span class="dmd-props" name="centro">(${JSON.parse(data['details'])['centro']})</span></p>
+                </div>
                 `
             }else if(data['algType'] == "kmeans"){
                 dataDetails.innerHTML += `
-                <p><b>Clusters:</b> ${data['details']['n']}</p>
+                <div id="d-more-details">
+                    <p><b>Clusters:</b> <span class="dmd-props" name="clusters">${JSON.parse(data['details'])['n']}</span></p>
+                </div>
                 `
             }
         });
@@ -194,6 +204,66 @@ window.onload = () => {
 
     document.querySelector('#close-sform-btn').addEventListener('click', e => {
         document.querySelector('#save-form-container').style.display = 'none';
+    });
+
+    document.querySelector('#save-name-model').addEventListener('input', e =>{
+        let elem = e.target;
+        let elBtnSave = document.querySelector('#btn-confirm-save');
+
+        if(elem.value.trim() == ''){
+            elBtnSave.setAttribute('disabled', 'true');
+        }else{
+            elBtnSave.removeAttribute('disabled');
+        }
+    })
+
+    document.querySelector('#btn-confirm-save').addEventListener('click', e =>{
+        let tipo = document.querySelector('#data-details #d-algType').innerText;
+        let nombre = document.querySelector("#save-name-model").value;
+        let archivo = document.querySelector('#data-details #d-filename').innerText;
+        let datos = JSON.stringify(gcleandata);
+        let params = JSON.stringify(gparams);
+
+        let graphencode = document.querySelector('#model-result-graph').src.split(',')[1];
+        let graphname = document.querySelector('#model-result-graph').getAttribute('name');
+
+        const loadingSaveForm = document.querySelector('#loading-save-form');
+        loadingSaveForm.classList.add('lt-open');
+
+        const formData = new FormData();
+        formData.append('tipo', tipo);
+        formData.append('nombre', nombre);
+        formData.append('archivo', archivo);
+        formData.append('datos', datos);
+        formData.append('params', params);
+        formData.append('graphencode', graphencode);
+        formData.append('graphname', graphname);
+
+        fetch(`/model/save`, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            
+            loadingSaveForm.classList.remove('lt-open');
+            document.querySelector('#save-form-container').style.display = "none";
+            document.querySelector('#save-name-model').value = "";
+            
+            const responseAlert = document.querySelector('#response-alert-container');
+            responseAlert.classList.add(`alert-${data['code']}`);
+            document.querySelector('#alert-msg').innerText = data['msg'];
+
+            responseAlert.classList.remove("hidden");
+
+            setTimeout(() => {
+                responseAlert.classList.add("hidden");
+            }, 3000);
+        });
     });
 }
 

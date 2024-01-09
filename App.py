@@ -6,6 +6,7 @@ from models.db import db
 from models.kmeans_model import KMeansModel
 from models.knn_model import KNNModel
 from modules.secret_key import getSecretKey
+from modules.read_configdb import readConfigFile
 from io import BytesIO
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -15,11 +16,12 @@ import base64
 app = Flask(__name__)
 
 # Configuración de la base de datos
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_PORT'] = 3306
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = ''
-app.config['MYSQL_DATABASE_DB'] = 'convocatoria'
+mydb = readConfigFile('db/dbconfig.txt')
+app.config['MYSQL_DATABASE_HOST'] = mydb['host']
+app.config['MYSQL_DATABASE_PORT'] = mydb['port']
+app.config['MYSQL_DATABASE_USER'] = mydb['user']
+app.config['MYSQL_DATABASE_PASSWORD'] = mydb['password']
+app.config['MYSQL_DATABASE_DB'] = mydb['db']
 
 # Inicia la sesión
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -115,7 +117,7 @@ def processKNN():
             "algType": "knn",
             "filename": filename,
             "cleandata": cleandata.to_json(orient='records'),
-            "details": {"k": k, "centro": request.form['centro']},
+            "details": json.dumps({"k": k, "centro": request.form['centro']}),
             "prediction": prediction,
             "plot": encoded_img
             }) 
@@ -145,12 +147,44 @@ def processKMeans():
         "algType": "kmeans",
         "filename": filename,
         "cleandata": cleandata.to_json(orient='records'),
-        "details": {"n": n},
+        "details": json.dumps({"n": n}),
         "plot": encoded_img
         }) 
 #========================================================================#
 
+@app.post('/model/save')
+def saveModel():
+    tipo = request.form['tipo']
+    nombre = request.form['nombre']
+    archivo = request.form['archivo']
+    graphencode = request.form['graphencode']
+    graphname = request.form['graphname']
+    # Decodificar la cadena Base64
+    decoded_img = base64.b64decode(graphencode)
 
+    # Crear un objeto BytesIO a partir de la imagen decodificada
+    img_data = BytesIO(decoded_img)
+
+    # Utiliza write para guardar la imagen en el sistema de archivos
+    with open('uploads/machine_learning_model/' + graphname + ".png", 'wb') as f:
+        f.write(img_data.getvalue())
+
+    datos = request.form.get('datos')
+    datosjson = json.loads(datos)
+
+    params = request.form.get('params')
+    paramsjson = json.loads(params)
+
+    sql = "INSERT INTO modelos (tipo, nombre, archivo, datos, parametros, grafico, creado) VALUES (%s, %s, %s, %s, %s, %s, NOW())"
+    data = (tipo, nombre, archivo, datosjson, paramsjson, graphname)
+
+    dbquery = dbModel.insertarDatos(sql, data)
+
+    #TRABAJAR EN FRONTEND COMO SE VERIA LA RESPUESTA
+    if dbquery == 1:
+        return jsonify({'code': 'success', 'msg': 'El modelo se ha registrado correctamente.'})
+    else:
+        return jsonify({'code': 'error', 'msg': 'Hubo un problema al registrar el modelo.'})
 
 @app.post('/prueba')
 def prueba():
