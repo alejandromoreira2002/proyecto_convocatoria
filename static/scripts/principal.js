@@ -356,14 +356,35 @@ const showForm = (elem) => {
         document.querySelector('#form-btn-process').removeAttribute('disabled')
 
         document.querySelectorAll('.data-cols:disabled').forEach((elem) => {
-            elem.removeAttribute('disabled');
-            elem.removeAttribute('checked');
+            elem.disabled = false;
+            elem.checked = false;
+            elem.parentElement.style.color = 'initial';
         });
         
         let opcion = e.target.value;
-        document.querySelector(`#${opcion}`).setAttribute('checked', true);
-        document.querySelector(`#${opcion}`).setAttribute('disabled', true);
-    })
+        document.querySelector(`#${opcion}`).checked = true;
+        document.querySelector(`#${opcion}`).disabled = true;
+        document.querySelector(`#${opcion}`).parentElement.style.color = 'rgb(170,170,170)';
+    });
+
+    document.querySelectorAll('.data-cols').forEach((checkbox)=>{
+        checkbox.addEventListener('change', ()=>{
+            const checkboxesMarcados = document.querySelectorAll('.data-cols:checked:enabled');
+            const checkboxesDesmarcados = document.querySelectorAll('.data-cols:not(:checked)');
+
+            if (checkboxesMarcados.length >= 2){
+                for(let cbox of checkboxesDesmarcados){
+                    cbox.disabled = true;
+                    cbox.parentElement.style.color = 'rgb(170,170,170)';
+                }
+            }else{
+                for(let cbox of checkboxesDesmarcados){
+                    cbox.disabled = false;
+                    cbox.parentElement.style.color = 'initial';
+                }
+            }
+        });
+    });
 }
 
 const renderKNNForm = () => {
